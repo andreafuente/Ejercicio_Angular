@@ -1,9 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Authentication } from '../../services/authentication';
 
 @Component({
-  imports: [],
   selector: 'app-cabecera-privada',
-  styleUrl: './cabecera-privada.css',
+  imports: [],
   templateUrl: './cabecera-privada.html',
+  styleUrl: './cabecera-privada.css',
 })
-export class CabeceraPrivada {}
+export class CabeceraPrivada {
+  authentication = inject(Authentication);
+
+  logout(): void {
+    this.authentication.logout();
+  }
+}

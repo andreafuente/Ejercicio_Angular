@@ -1,1 +1,10 @@
-<p>cabecera-privada works!</p>
+<header>
+    <p>
+      Usuario: {{ authentication.getUsername() }}
+    </p>
+
+    <button type="button" (click)="logout()">
+      Salir
+    </button>
+  
+</header>
