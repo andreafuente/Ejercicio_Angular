@@ -1,36 +1,34 @@
-import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, DestroyRef, inject } from '@angular/core';
+import { Rotate } from '../../directives/rotate';
+import { GalleryImage } from '../../model/gallery-image';
+import { galleryImages } from '../../data/gallery-images'; 
 
-interface GalleryImage {
-  id: number;
-  src: string;
-  title: string;
-}
+
 @Component({
-  imports: [],
+  imports: [Rotate],
   selector: 'app-galeria',
   styleUrl: './galeria.css',
   templateUrl: './galeria.html',
 })
 export class Galeria {
   private cdr = inject(ChangeDetectorRef);
-  images: GalleryImage[] = [
-    { id: 1, src: 'cerdo.jpeg', title: 'Cerdo' },
-    { id: 2, src: 'hipopotamo.webp', title: 'Hipopótamo' },
-    { id: 3, src: 'leona.webp', title: 'Leona' },
-    { id: 4, src: 'tigre.webp', title: 'Tigre' },
-    { id: 5, src: 'mapaches.webp', title: 'Mapaches' },
-    { id: 6, src: 'suricato.webp', title: 'Suricato' },
-    { id: 7, src: 'zorro.webp', title: 'Zorro' },
-    { id: 8, src: 'loro.jpg', title: 'Loros' },
-  ];
 
-  imageWidth: number = 400;
-  imageHeight: number = 200;
+
+  imageWidth = 400;
+  imageHeight = 200;
+
+images: GalleryImage[] = galleryImages;
+
 
   selectedImage: GalleryImage = this.images[0];
 
   isPlaying: boolean = false;
   intervalId: ReturnType<typeof setInterval> | null = null;
+
+  currentPage: number = 0;
+  imagesPerPage: number = 3;
+
+  private destroyRef = inject(DestroyRef);
 
   play(): void {
     this.isPlaying = true;
@@ -44,7 +42,7 @@ export class Galeria {
   }
   stop(): void {
     this.isPlaying = false;
-    if (this.intervalId) {
+    if (this.intervalId !== null) {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
@@ -55,12 +53,12 @@ export class Galeria {
 
   nextImage(): void {
     const currentIndex = this.images.indexOf(this.selectedImage);
-    this.selectedImage = this.images[currentIndex + 1];
+    this.selectedImage = this.images[(currentIndex + 1) % this.images.length];
   }
 
   previousImage(): void {
     const currentIndex = this.images.indexOf(this.selectedImage);
-    this.selectedImage = this.images[currentIndex - 1];
+    this.selectedImage = this.images[(currentIndex - 1 + this.images.length) % this.images.length];
   }
 
   increaseImage(): void {
@@ -73,13 +71,10 @@ export class Galeria {
     this.imageHeight -= 50;
   }
 
-currentPage: number = 0;
-imagesPerPage: number = 3;
-
-get paginatedImages(): GalleryImage[] {
-  const startIndex = this.currentPage * this.imagesPerPage;
-  return this.images.slice(startIndex, startIndex + this.imagesPerPage);
-}
+  get paginatedImages(): GalleryImage[] {
+    const startIndex = this.currentPage * this.imagesPerPage;
+    return this.images.slice(startIndex, startIndex + this.imagesPerPage);
+  }
 
   nextPage(): void {
     if ((this.currentPage + 1) * this.imagesPerPage < this.images.length) {
@@ -91,7 +86,7 @@ get paginatedImages(): GalleryImage[] {
     if (this.currentPage > 0) {
       this.currentPage--;
     }
-  } 
+  }
 
   get totalPages(): number {
     return Math.ceil(this.images.length / this.imagesPerPage);

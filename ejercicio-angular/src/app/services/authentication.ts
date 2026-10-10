@@ -1,7 +1,9 @@
-import { Service } from '@angular/core';
+import { Service, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Service()
 export class Authentication {
+  private router = inject(Router);
   private logged: boolean = false;
   private username: string = '';
 
@@ -24,6 +26,7 @@ export class Authentication {
     this.username = '';
     localStorage.removeItem('logged');
     localStorage.removeItem('username');
+     this.router.navigate(['/']);
   }
 
   isLogged(): boolean {

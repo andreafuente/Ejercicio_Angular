@@ -1,57 +1,47 @@
 <section class="page">
   <h1>Galería</h1>
-<section class="selected-image">
-  <h2>Imagen seleccionada</h2>
+  <section class="selected-image">
+    <h2>Imagen seleccionada</h2>
 
-  <img
-    [src]="selectedImage.src"
-    [alt]="selectedImage.title"
-    [width]="imageWidth"
-    [height]="imageHeight"
-    [style.width.px]="imageWidth"
-    [style.height.px]="imageHeight"
-  />
-</section>
+    <img [src]="selectedImage.src" [alt]="selectedImage.title" rotate="0" step="15" [style.width.px]="imageWidth"
+      [style.height.px]="imageHeight" />
+  </section>
   <ul class="gallery">
     @for (image of paginatedImages; track image.id) {
-  <li class="gallery-item">
-    <button type="button" (click)="selectImage(image)"[class.selected]="image.id === selectedImage.id">
-    <img [src]="image.src" [alt]="image.title" />
-    <p>{{ image.title }}</p>
-  </button>
-  </li>
-}  </ul>
+    <li class="gallery-item">
+      <button type="button" (click)="selectImage(image)" [class.selected]="image.id === selectedImage.id">
+        <img [src]="image.src" [alt]="image.title" />
+        <p>{{ image.title }}</p>
+      </button>
+    </li>
+    }
+  </ul>
 
-<div class="gallery-pagination">
-  <button
-    type="button"
-    (click)="previousPage()"
-    [disabled]="currentPage === 0"
-  >
-    Anterior página
-  </button>
+  <div class="gallery-pagination">
+    <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">
+      Anterior página
+    </button>
 
-  <button
-    type="button"
-    (click)="nextPage()"
-    [disabled]="currentPage === totalPages - 1"
-  >
-    Siguiente página
-  </button>
-</div>
-  <div class=" global-navigation">
+    <button type="button" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+      Siguiente página
+    </button>
+  </div>
+  <div class="global-navigation">
     <button type="button" (click)="previousImage()" [disabled]="images.indexOf(selectedImage) === 0">Anterior</button>
-    <button type="button" (click)="nextImage()" [disabled]="images.indexOf(selectedImage) === images.length - 1">Siguiente</button>
-    <button type="button" (click)="increaseImage()" [disabled]="imageWidth >= 800 || imageHeight >= 800">Aumentar tamaño</button>
-    <button type="button" (click)="decreaseImage()" [disabled]="imageWidth <= 100 || imageHeight <= 100">Disminuir tamaño</button>
-   @if (isPlaying) {
-  <button type="button" (click)="stop()">
-    Stop
-  </button>
-} @else {
-  <button type="button" (click)="play()">
-    Play
-  </button>
-}
+    <button type="button" (click)="nextImage()"
+      [disabled]="images.indexOf(selectedImage) === images.length - 1">Siguiente</button>
+    <button type="button" (click)="increaseImage()" [disabled]="imageWidth >= 800 || imageHeight >= 800">Aumentar
+      tamaño</button>
+    <button type="button" (click)="decreaseImage()" [disabled]="imageWidth <= 100 || imageHeight <= 100">Disminuir
+      tamaño</button>
+    @if (isPlaying) {
+    <button type="button" (click)="stop()">
+      Stop
+    </button>
+    } @else {
+    <button type="button" (click)="play()">
+      Play
+    </button>
+    }
   </div>
 </section>
