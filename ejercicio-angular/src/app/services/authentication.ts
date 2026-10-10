@@ -27,6 +27,9 @@ export class Authentication {
   }
 
   isLogged(): boolean {
+      if (typeof localStorage === 'undefined') {
+    return false;
+  }
     this.logged = localStorage.getItem('logged') === 'true';
     this.username = localStorage.getItem('username') || '';
     return this.logged;

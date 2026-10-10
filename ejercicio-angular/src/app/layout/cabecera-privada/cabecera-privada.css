@@ -1,0 +1,35 @@
+header {
+  background-color: #263238;
+  color: white;
+  padding: 1rem 2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+header p {
+  margin: 0;
+  font-weight: 500;
+}
+
+header button {
+  padding: 0.5rem 1rem;
+  border: 1px solid white;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+header button:hover {
+  background-color: white;
+  color: #263238
+}
+
+header button:focus-visible {
+  outline: 3px solid #ffca28;
+  outline-offset: 3px;
+}
