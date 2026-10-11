@@ -14,7 +14,6 @@ input {
   box-sizing: border-box;
   width: 100%;
   padding: 0.75rem;
-
   border: 1px solid #757575;
   border-radius: 4px;
 }
@@ -30,14 +29,15 @@ input:focus {
 }
 
 button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 0.75rem 1.25rem;
-
   border: 0;
   border-radius: 4px;
-
   background-color: #263238;
   color: white;
-
   cursor: pointer;
 }
 
@@ -48,4 +48,12 @@ button:hover {
 button:focus-visible {
   outline: 3px solid #263238;
   outline-offset: 3px;
+}
+
+img.loading {
+  display: block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  background-color: transparent;
 }

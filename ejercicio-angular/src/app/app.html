@@ -1,11 +1,13 @@
-@if (authentication.isLogged()) {
-  <app-cabecera-privada></app-cabecera-privada>
-  <app-menu-privado></app-menu-privado>
+<div class="app-root">
+ @if (authentication.isLogged()) {
+<app-cabecera-privada></app-cabecera-privada>
+<app-menu-privado></app-menu-privado>
 }
 @else {
-  <app-cabecera-publica></app-cabecera-publica>
-  <app-menu-publico></app-menu-publico>
+<app-cabecera-publica></app-cabecera-publica>
+<app-menu-publico></app-menu-publico>
 }
 <main><router-outlet></router-outlet></main>
-<router-outlet></router-outlet>
+
 <app-footer></app-footer>
+</div>

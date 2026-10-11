@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angula
 import { Authentication } from '../../services/authentication';
 import { Router } from '@angular/router';
 
+
 @Component({
   imports: [ReactiveFormsModule,],
   selector: 'app-login',
@@ -31,15 +32,24 @@ export class Login {
                    (this.loginForm.controls.password.hasError('minlength') && this.loginForm.controls.password.touched) ? 'La contraseña debe tener al menos 8 caracteres.' : '';
   }
 loginError = '';
-
+isLoading = false;
 
  onSubmit(): void {
   if (this.loginForm.valid) {
-    const username = this.loginForm.controls.username.value!;
-    const password = this.loginForm.controls.password.value!;
+    this.isLoading = true;
+    this.authentication.login({ 
+    username: this.loginForm.controls.username.value!, 
+    password: this.loginForm.controls.password.value! 
+  }).subscribe((success) => {
+        this.isLoading = false;
+        if (success) {
+          this.loginError = '';
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.loginError = 'Usuario o contraseña incorrectos.';
+        }
+      });
 
-    this.authentication.login({ username, password });
-    this.router.navigate(['/dashboard']);
   } else {
     this.loginForm.markAllAsTouched();
   }

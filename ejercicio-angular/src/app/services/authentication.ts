@@ -1,5 +1,6 @@
 import { Service, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, of, delay } from 'rxjs';
 
 @Service()
 export class Authentication {
@@ -7,18 +8,18 @@ export class Authentication {
   private logged: boolean = false;
   private username: string = '';
 
-  login({ username, password }: { username: string; password: string }): boolean {
+  login({ username, password }: { username: string; password: string }): Observable<boolean> {
     if (username === 'master@lemoncode.net' && password === '12345678') {
       this.logged = true;
       this.username = username;
 
       localStorage.setItem('logged', 'true');
       localStorage.setItem('username', username);
-      return true;
+      return of(true).pipe(delay(2000));
     }
     this.logged = false;
     this.username = '';
-    return false;
+    return of(false).pipe(delay(2000));
   }
 
   logout(): void {

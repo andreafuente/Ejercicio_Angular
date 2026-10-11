@@ -7,9 +7,14 @@
 .header__content {
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.header__brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.header__logo {
+  height: 40px;
+  width: auto;
 }
